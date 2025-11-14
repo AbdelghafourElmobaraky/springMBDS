@@ -1,5 +1,6 @@
-package com.microservices.account.Entities;
+package com.microservices.account.Clients;
 
+import com.microservices.account.Entities.Customer;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;

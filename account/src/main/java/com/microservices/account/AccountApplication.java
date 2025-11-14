@@ -1,18 +1,20 @@
 package com.microservices.account;
 
+import com.microservices.account.Clients.CustomerClient;
 import com.microservices.account.Entities.Account;
 import com.microservices.account.Entities.CurrencyType;
 import com.microservices.account.Repositories.AccountRepository;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.cloud.openfeign.EnableFeignClients;
 import org.springframework.context.annotation.Bean;
 
 import java.time.LocalDate;
-import java.util.List;
 import java.util.UUID;
 
 @SpringBootApplication
+@EnableFeignClients
 public class AccountApplication {
 
     public static void main(String[] args) {
@@ -20,25 +22,18 @@ public class AccountApplication {
     }
 
     @Bean
-    CommandLineRunner commandLineRunner(AccountRepository accountRepository) {
+    CommandLineRunner commandLineRunner(AccountRepository accountRepository, CustomerClient customerClient) {
         return args -> {
-            List<Account> accountList = List.of(
-                    Account.builder()
-                            .id(UUID.randomUUID().toString())
-                            .balance(180D)
-                            .currency(CurrencyType.EUR)
-                            .dateCreated(LocalDate.now())
-                            .customerId(1L)
-                            .build(),
-                    Account.builder()
-                            .id(UUID.randomUUID().toString())
-                            .balance(280D)
-                            .currency(CurrencyType.EUR)
-                            .dateCreated(LocalDate.now())
-                            .customerId(2L)
-                            .build()
-            );
-            accountRepository.saveAll(accountList);
+            customerClient.getAllCustomers().forEach(customer -> {
+                Account accountInstance = Account.builder()
+                        .customerId(customer.getId())
+                        .id(UUID.randomUUID().toString())
+                        .balance(Math.random()*1000)
+                        .dateCreated(LocalDate.now())
+                        .currency(CurrencyType.EUR)
+                        .build();
+                accountRepository.save(accountInstance);
+            });
         };
     }
 }
