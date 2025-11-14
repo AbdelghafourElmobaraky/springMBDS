@@ -1,4 +1,8 @@
 package com.microservices.account.Repositories;
+import com.microservices.account.Entities.Account;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
 
-public class AccountRepository {
+@Repository
+public interface AccountRepository extends JpaRepository<Account, String> {
 }

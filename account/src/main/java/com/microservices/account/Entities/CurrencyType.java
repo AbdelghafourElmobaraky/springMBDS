@@ -1,5 +1,5 @@
 package com.microservices.account.Entities;
 
-public enum AccountType {
+public enum CurrencyType {
     EUR, USD
 }
