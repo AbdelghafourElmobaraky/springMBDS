@@ -2,9 +2,9 @@ package com.microservices.customer;
 
 import com.microservices.customer.Entities.Customer;
 import com.microservices.customer.Repositories.CustomerRepository;
+import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Bean;
 
 import java.util.List;
@@ -19,30 +19,25 @@ public class CustomerApplication {
     @Bean
     CommandLineRunner commandLineRunner(CustomerRepository customerRepository) {
         return args -> {
-            List<Customer> customers = List.of(
+            List<Customer> customersList = List.of(
                     Customer.builder()
-                            .firstName("Elodie")
-                            .lastName("Bantos")
+                            .firstName("Elodie").lastName("Bantos")
                             .email("elodie.bantos@etu.univ-cotedazur.fr")
                             .build(),
                     Customer.builder()
-                            .firstName("Yue")
-                            .lastName("Guo")
+                            .firstName("Vue").lastName("Guo")
                             .email("yue.guo@etu.univ-cotedazur.fr")
                             .build(),
                     Customer.builder()
-                            .firstName("Valeriia")
-                            .lastName("Lapshina")
-                            .email("valeriia.lapshina@etu.univ-cotedazur.fr")
+                            .firstName("Valeria").lastName("Lapshina")
+                            .email("valeria.lapshina@etu.univ-cotedazur.fr")
                             .build(),
                     Customer.builder()
-                            .firstName("Dounia")
-                            .lastName("Zoubid")
+                            .firstName("Dounia").lastName("Zoubid")
                             .email("dounia.zoubid@etu.univ-cotedazur.fr")
                             .build()
             );
-            customerRepository.saveAll(customers);
+            customerRepository.saveAll(customersList);
         };
     }
 }
-
